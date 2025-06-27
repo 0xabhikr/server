@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   const token = process.env.BOT_TOKEN;
 
   try {
-    const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -26,12 +26,12 @@ export default async function handler(req, res) {
       }),
     });
 
-    const result = await tgRes.json();
-    console.log('Telegram API response:', result);
+    const data = await response.json();
+    console.log('Telegram API response:', data);
 
     res.status(200).json({ ok: true });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error sending message:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
