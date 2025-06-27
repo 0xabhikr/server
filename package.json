@@ -1,7 +1,7 @@
 {
   "name": "telegram-bot",
   "version": "1.0.0",
-  "type": "module",  // ✅ correct location
+  "type": "module",  
   "dependencies": {
     "dotenv": "^16.6.0",
     "express": "^5.1.0",
