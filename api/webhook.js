@@ -6,7 +6,6 @@ export default async function handler(req, res) {
   }
 
   const update = req.body;
-  console.log('Received update:', update);
 
   if (!update.message) {
     return res.status(200).json({ message: 'No message to process' });
@@ -17,21 +16,18 @@ export default async function handler(req, res) {
   const token = process.env.BOT_TOKEN;
 
   try {
-    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: `You said: ${text}`,
-      }),
+      body: JSON.stringify({ chat_id: chatId, text: `You said: ${text}` }),
     });
 
-    const data = await response.json();
-    console.log('Telegram API response:', data);
+    const result = await tgRes.json();
+    console.log('Telegram API response:', result);
 
     res.status(200).json({ ok: true });
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
